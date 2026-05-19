@@ -1,59 +1,33 @@
 <div class="login-container">
-
-  <div class="overlay"></div>
-
   <div class="login-card">
-
+    
     <div class="login-left">
-
       <h1>AgroSys</h1>
-
-      <p>
-        Plataforma moderna de gestión agrícola inteligente.
-      </p>
-
-      <img
-        src="https://cdn-icons-png.flaticon.com/512/2909/2909763.png"
-        alt="agriculture">
-
+      <p>Plataforma moderna de gestión agrícola inteligente.</p>
+      <img src="https://cdn-icons-png.flaticon.com/512/2909/2909763.png" alt="agriculture">
     </div>
 
     <div class="login-right">
-
       <h2>Bienvenido</h2>
-
-      <p>
-        Inicia sesión para continuar
-      </p>
+      <p>Inicia sesión para continuar</p>
 
       <div class="form-group">
-
-        <label>Correo</label>
-
-        <input
-          type="email"
-          placeholder="correo@gmail.com"
-          [(ngModel)]="email">
-
+        <label>Correo Electrónico</label>
+        <input type="email" placeholder="correo@gmail.com" [(ngModel)]="email">
       </div>
 
       <div class="form-group">
-
         <label>Contraseña</label>
-
-        <input
-          type="password"
-          placeholder="********"
-          [(ngModel)]="password">
-
+        <input type="password" placeholder="********" [(ngModel)]="password">
       </div>
 
-      <button (click)="login()">
-        Ingresar
-      </button>
+      <button (click)="login()">Ingresar</button>
 
+      <div class="switch-auth">
+        <span>¿No tienes una cuenta?</span>
+        <a (click)="goToRegister()">Regístrate aquí</a>
+      </div>
     </div>
 
   </div>
-
 </div>

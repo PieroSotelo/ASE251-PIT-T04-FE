@@ -10,23 +10,21 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-
   email = '';
   password = '';
 
   constructor(private router: Router){}
 
   login(){
-
-    if(
-      this.email === 'admin@gmail.com' &&
-      this.password === '123456'
-    ){
-      this.router.navigate(['/dashboard']);
-    }else{
-      alert('Usuario o contraseña incorrectos');
+    if(this.email === 'admin@gmail.com' && this.password === '123456'){
+      alert('¡Inicio de sesión exitoso!');
+      this.router.navigate(['/dashboard']); // Te redirige al panel de inmediato
+    } else {
+      alert('Credenciales incorrectas de prueba.');
     }
-
   }
 
+  goToRegister() {
+    this.router.navigate(['/register']); // Navegación física a tu otro componente
+  }
 }

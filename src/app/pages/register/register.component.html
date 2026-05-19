@@ -1,0 +1,41 @@
+<div class="register-container">
+  <div class="register-card">
+    
+    <div class="register-left">
+      <h2>Tu nuevo comienzo empieza aquí</h2>
+    </div>
+
+    <div class="register-right">
+      <h2>Crear Cuenta</h2>
+      <p>Completa tus datos para registrarte en el sistema</p>
+
+      <div class="form-group">
+        <label>Nombre Completo</label>
+        <input type="text" placeholder="Ej. Juan Pérez" [(ngModel)]="fullName">
+      </div>
+
+      <div class="form-group">
+        <label>Gmail</label>
+        <input type="email" placeholder="correo@gmail.com" [(ngModel)]="email">
+      </div>
+
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" placeholder="********" [(ngModel)]="password">
+      </div>
+
+      <div class="form-group">
+        <label>Confirmar Contraseña</label>
+        <input type="password" placeholder="********" [(ngModel)]="confirmPassword">
+      </div>
+
+      <button (click)="handleRegister()">Registrarse</button>
+
+      <div class="switch-auth">
+        <span>¿Ya tienes una cuenta?</span>
+        <a (click)="goToLogin()">Inicia sesión aquí</a>
+      </div>
+    </div>
+
+  </div>
+</div>

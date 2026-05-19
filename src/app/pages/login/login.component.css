@@ -1,105 +1,107 @@
-.login-container{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=1974') center/cover;
-  position:relative;
+:host {
+  display: block;
+  width: 100vw;
+  height: 100vh;
 }
 
-.overlay{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,0.55);
+.login-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Degradado premium tecnológico agrícola para evitar pantallas negras */
+  background: radial-gradient(circle at top right, #16a34a, #090d16 75%);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.login-card{
-  width:950px;
-  min-height:600px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(16px);
-  border-radius:30px;
-  overflow:hidden;
-  position:relative;
-  z-index:2;
+/* Tarjeta Cristalina Transparente (Glassmorphism) */
+.login-card {
+  display: flex;
+  width: 850px;
+  height: 520px;
+  /* Fondo oscuro semi-transparente */
+  background: rgba(15, 23, 42, 0.45); 
+  border-radius: 30px;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
 }
 
-.login-left{
-  background:linear-gradient(135deg,#22c55e,#14532d);
-  padding:60px;
-  color:white;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
+.login-left {
+  flex: 1;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.8), rgba(21, 128, 61, 0.8));
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
 }
 
-.login-left h1{
-  font-size:60px;
-  margin-bottom:20px;
+.login-left h1 { font-size: 42px; margin-bottom: 10px; font-weight: 800; }
+.login-left p { font-size: 16px; opacity: 0.9; max-width: 250px; line-height: 1.5; }
+.login-left img { width: 160px; margin-top: 30px; }
+
+.login-right {
+  flex: 1.2;
+  padding: 45px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
 }
 
-.login-left p{
-  line-height:1.8;
-  margin-bottom:40px;
+.login-right h2 { font-size: 32px; margin: 0 0 5px 0; font-weight: 700; }
+.login-right p { color: #94a3b8; margin: 0 0 30px 0; font-size: 14px; }
+
+.form-group { margin-bottom: 20px; display: flex; flex-direction: column; }
+.form-group label { font-size: 13px; color: #cbd5e1; margin-bottom: 8px; font-weight: 600; }
+
+.form-group input {
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(15, 23, 42, 0.6);
+  color: white;
+  outline: none;
+  font-size: 14px;
+  transition: all 0.3s ease;
 }
 
-.login-left img{
-  width:260px;
+.form-group input:focus {
+  border-color: #22c55e;
+  background: rgba(15, 23, 42, 0.8);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
 }
 
-.login-right{
-  background:#0f172a;
-  padding:60px;
-  color:white;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
+.login-right button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  background: #22c55e;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
 }
 
-.login-right h2{
-  font-size:42px;
-  margin-bottom:10px;
-}
+.login-right button:hover { background: #16a34a; transform: translateY(-2px); }
 
-.login-right p{
-  color:#94a3b8;
-  margin-bottom:30px;
-}
+.switch-auth { text-align: center; margin-top: 20px; font-size: 14px; color: #94a3b8; }
+.switch-auth a { color: #22c55e; text-decoration: none; font-weight: 700; cursor: pointer; margin-left: 5px; }
+.switch-auth a:hover { text-decoration: underline; }
 
-.form-group{
-  margin-bottom:24px;
-}
-
-.form-group label{
-  display:block;
-  margin-bottom:10px;
-}
-
-.form-group input{
-  width:100%;
-  padding:16px;
-  border:none;
-  border-radius:16px;
-  background:#1e293b;
-  color:white;
-  outline:none;
-}
-
-button{
-  margin-top:10px;
-  padding:18px;
-  border:none;
-  border-radius:16px;
-  background:linear-gradient(135deg,#22c55e,#15803d);
-  color:white;
-  font-size:16px;
-  font-weight:700;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-button:hover{
-  transform:translateY(-4px);
+@media (max-width: 900px) {
+  .login-card { width: 90%; height: auto; flex-direction: column; }
+  .login-left { display: none; }
 }

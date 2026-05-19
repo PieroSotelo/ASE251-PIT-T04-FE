@@ -1,13 +1,10 @@
-.dashboard-layout{
-  min-height:100vh;
-  background:#020617;
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 24px;
+  width: 100%;
 }
-
-.dashboard-content{
-  margin-left:140px;
-  padding:30px;
-}
-
 /* STATS */
 
 .stats-grid{

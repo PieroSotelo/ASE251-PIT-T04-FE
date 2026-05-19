@@ -1,0 +1,14 @@
+<div *ngIf="isAuthRoute()" class="auth-wrapper">
+  <router-outlet></router-outlet>
+</div>
+
+<div *ngIf="!isAuthRoute()" class="dashboard-layout">
+  <app-sidebar></app-sidebar>
+  
+  <div class="dashboard-content">
+    <app-topbar></app-topbar>
+    <main class="page-container">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

@@ -1,311 +1,143 @@
-<div class="dashboard-layout">
+<section class="stats-grid">
+  <div class="stat-card green">
+    <div class="card-icon">🌱</div>
+    <h3>Producción Total</h3>
+    <h1>84%</h1>
+    <p>+12% desde el mes pasado</p>
+  </div>
 
-  <app-sidebar></app-sidebar>
+  <div class="stat-card blue">
+    <div class="card-icon">🛒</div>
+    <h3>Ventas Totales</h3>
+    <h1>S/ 24,850</h1>
+    <p>+18% desde el mes pasado</p>
+  </div>
 
-  <main class="dashboard-content">
+  <div class="stat-card purple">
+    <div class="card-icon">👥</div>
+    <h3>Clientes Registrados</h3>
+    <h1>1,245</h1>
+    <p>+8% desde el mes pasado</p>
+  </div>
 
-    <app-topbar></app-topbar>
+  <div class="stat-card orange">
+    <div class="card-icon">📦</div>
+    <h3>Órdenes Activas</h3>
+    <h1>32</h1>
+    <p>+5% desde el mes pasado</p>
+  </div>
+</section>
 
-    <!-- CARDS -->
-
-    <section class="stats-grid">
-
-      <div class="stat-card green">
-
-        <div class="card-icon">
-          🌱
-        </div>
-
-        <h3>Producción Total</h3>
-
-        <h1>84%</h1>
-
-        <p>+12% desde el mes pasado</p>
-
+<section class="charts-grid">
+  <div class="chart-box">
+    <div class="chart-header">
+      <h2>Producción por Cultivo</h2>
+      <button>Este Mes</button>
+    </div>
+    <div class="pie-wrapper">
+      <div class="pie-chart"></div>
+      <div class="pie-center">
+        <span>Total</span>
+        <h1>640 ha</h1>
       </div>
-
-      <div class="stat-card blue">
-
-        <div class="card-icon">
-          🛒
-        </div>
-
-        <h3>Ventas Totales</h3>
-
-        <h1>S/ 24,850</h1>
-
-        <p>+18% desde el mes pasado</p>
-
+    </div>
+    <div class="legend">
+      <div class="legend-item">
+        <div class="dot green-dot"></div>
+        <span>Manzana Gala</span>
+        <strong>40%</strong>
       </div>
-
-      <div class="stat-card purple">
-
-        <div class="card-icon">
-          👥
-        </div>
-
-        <h3>Clientes Registrados</h3>
-
-        <h1>1,245</h1>
-
-        <p>+8% desde el mes pasado</p>
-
+      <div class="legend-item">
+        <div class="dot blue-dot"></div>
+        <span>Manzana Fuji</span>
+        <strong>25%</strong>
       </div>
-
-      <div class="stat-card orange">
-
-        <div class="card-icon">
-          📦
-        </div>
-
-        <h3>Órdenes Activas</h3>
-
-        <h1>32</h1>
-
-        <p>+5% desde el mes pasado</p>
-
+      <div class="legend-item">
+        <div class="dot yellow-dot"></div>
+        <span>Pera</span>
+        <strong>15%</strong>
       </div>
-
-    </section>
-
-    <!-- CHARTS -->
-
-    <section class="charts-grid">
-
-      <!-- LEFT -->
-
-      <div class="chart-box">
-
-        <div class="chart-header">
-
-          <h2>Producción por Cultivo</h2>
-
-          <button>
-            Este Mes
-          </button>
-
-        </div>
-
-        <div class="pie-wrapper">
-
-          <div class="pie-chart"></div>
-
-          <div class="pie-center">
-            <span>Total</span>
-            <h1>640 ha</h1>
-          </div>
-
-        </div>
-
-        <div class="legend">
-
-          <div class="legend-item">
-
-            <div class="dot green-dot"></div>
-
-            <span>Manzana Gala</span>
-
-            <strong>40%</strong>
-
-          </div>
-
-          <div class="legend-item">
-
-            <div class="dot blue-dot"></div>
-
-            <span>Manzana Fuji</span>
-
-            <strong>25%</strong>
-
-          </div>
-
-          <div class="legend-item">
-
-            <div class="dot yellow-dot"></div>
-
-            <span>Pera</span>
-
-            <strong>15%</strong>
-
-          </div>
-
-          <div class="legend-item">
-
-            <div class="dot purple-dot"></div>
-
-            <span>Durazno</span>
-
-            <strong>10%</strong>
-
-          </div>
-
-        </div>
-
+      <div class="legend-item">
+        <div class="dot purple-dot"></div>
+        <span>Durazno</span>
+        <strong>10%</strong>
       </div>
+    </div>
+  </div>
 
-      <!-- RIGHT -->
+  <div class="chart-box">
+    <div class="chart-header">
+      <h2>Producción Mensual</h2>
+      <button>2026</button>
+    </div>
+    <div class="line-chart">
+      <div class="line"></div>
+      <div class="point p1"></div>
+      <div class="point p2"></div>
+      <div class="point p3"></div>
+      <div class="point p4"></div>
+      <div class="point p5"></div>
+      <div class="point p6"></div>
+    </div>
+  </div>
+</section>
 
-      <div class="chart-box">
-
-        <div class="chart-header">
-
-          <h2>Producción Mensual</h2>
-
-          <button>
-            2026
-          </button>
-
-        </div>
-
-        <div class="line-chart">
-
-          <div class="line"></div>
-
-          <div class="point p1"></div>
-          <div class="point p2"></div>
-          <div class="point p3"></div>
-          <div class="point p4"></div>
-          <div class="point p5"></div>
-          <div class="point p6"></div>
-
-        </div>
-
+<section class="bottom-grid">
+  <div class="reports-box">
+    <div class="box-header">
+      <h2>Reportes Rápidos</h2>
+    </div>
+    <div class="reports-grid">
+      <div class="report-card green-card">
+        📄<span>Producción PDF</span>
       </div>
-
-    </section>
-
-    <!-- BOTTOM -->
-
-    <section class="bottom-grid">
-
-      <!-- REPORTS -->
-
-      <div class="reports-box">
-
-        <div class="box-header">
-
-          <h2>Reportes Rápidos</h2>
-
-        </div>
-
-        <div class="reports-grid">
-
-          <div class="report-card green-card">
-            📄
-            <span>Producción PDF</span>
-          </div>
-
-          <div class="report-card blue-card">
-            📘
-            <span>Ventas PDF</span>
-          </div>
-
-          <div class="report-card purple-card">
-            👥
-            <span>Clientes PDF</span>
-          </div>
-
-          <div class="report-card orange-card">
-            📦
-            <span>Inventario PDF</span>
-          </div>
-
-        </div>
-
-        <div class="upload-box">
-
-          <div class="upload-icon">
-            ☁️
-          </div>
-
-          <div>
-
-            <h3>
-              Arrastra un archivo o haz clic para subir
-            </h3>
-
-            <p>
-              Formatos: PDF, Excel, CSV
-            </p>
-
-          </div>
-
-        </div>
-
+      <div class="report-card blue-card">
+        📘<span>Ventas PDF</span>
       </div>
-
-      <!-- ACTIVITY -->
-
-      <div class="activity-box">
-
-        <div class="box-header">
-
-          <h2>Actividad Reciente</h2>
-
-          <button>
-            Ver Todo
-          </button>
-
-        </div>
-
-        <div class="activity-item">
-
-          <div class="activity-icon green-bg">
-            ✔
-          </div>
-
-          <div class="activity-content">
-
-            <h4>Nueva producción registrada</h4>
-
-            <p>Manzana Gala - 10 hectáreas</p>
-
-          </div>
-
-          <span>Hace 2 horas</span>
-
-        </div>
-
-        <div class="activity-item">
-
-          <div class="activity-icon blue-bg">
-            💰
-          </div>
-
-          <div class="activity-content">
-
-            <h4>Venta completada</h4>
-
-            <p>Cliente: Frutas del Sur SAC</p>
-
-          </div>
-
-          <span>Hace 5 horas</span>
-
-        </div>
-
-        <div class="activity-item">
-
-          <div class="activity-icon purple-bg">
-            👥
-          </div>
-
-          <div class="activity-content">
-
-            <h4>Nuevo cliente registrado</h4>
-
-            <p>Agroexportaciones Andes</p>
-
-          </div>
-
-          <span>Hace 1 día</span>
-
-        </div>
-
+      <div class="report-card purple-card">
+        👥<span>Clientes PDF</span>
       </div>
+      <div class="report-card orange-card">
+        📦<span>Inventario PDF</span>
+      </div>
+    </div>
+    <div class="upload-box">
+      <div class="upload-icon">☁️</div>
+      <div>
+        <h3>Arrastra un archivo o haz clic para subir</h3>
+        <p>Formatos: PDF, Excel, CSV</p>
+      </div>
+    </div>
+  </div>
 
-    </section>
-
-  </main>
-
-</div>
+  <div class="activity-box">
+    <div class="box-header">
+      <h2>Actividad Reciente</h2>
+      <button>Ver Todo</button>
+    </div>
+    <div class="activity-item">
+      <div class="activity-icon green-bg">✔</div>
+      <div class="activity-content">
+        <h4>Nueva producción registrada</h4>
+        <p>Manzana Gala - 10 hectáreas</p>
+      </div>
+      <span>Hace 2 horas</span>
+    </div>
+    <div class="activity-item">
+      <div class="activity-icon blue-bg">💰</div>
+      <div class="activity-content">
+        <h4>Venta completada</h4>
+        <p>Cliente: Frutas del Sur SAC</p>
+      </div>
+      <span>Hace 5 horas</span>
+    </div>
+    <div class="activity-item">
+      <div class="activity-icon purple-bg">👥</div>
+      <div class="activity-content">
+        <h4>Nuevo cliente registrado</h4>
+        <p>Agroexportaciones Andes</p>
+      </div>
+      <span>Hace 1 día</span>
+    </div>
+  </div>
+</section>

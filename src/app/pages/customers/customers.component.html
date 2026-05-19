@@ -1,92 +1,80 @@
-<div class="layout">
-
+<div class="crm-viewport-layout">
   <app-sidebar></app-sidebar>
 
-  <main class="content">
-
-    <div class="topbar">
-
-      <div>
+  <main class="main-content-wrapper">
+    <header class="section-header-panel">
+      <div class="header-titles">
         <h1>Clientes</h1>
-        <p>Gestión moderna de clientes</p>
+        <p>Historial, métricas de consumo y estados de cuenta.</p>
       </div>
+    </header>
 
-    </div>
-
-    <div class="customers-grid">
-
-      <div
-        class="customer-card"
-        *ngFor="let customer of customers"
-        (click)="openCustomer(customer)">
-
-        <div class="avatar">
-          👤
+    <section class="directory-grid-container">
+      <article 
+        class="directory-item-card" 
+        *ngFor="let customer of customers; trackBy: trackByCustomerId"
+        (click)="openCustomer(customer)"
+        tabindex="0"
+        (keydown.enter)="openCustomer(customer)">
+        
+        <div class="card-identity-block">
+          <div class="user-avatar-badge">
+            {{ customer.name.charAt(0) }}
+          </div>
+          <div class="user-meta-info">
+            <h3>{{ customer.name }}</h3>
+            <span class="user-email-text">{{ customer.email }}</span>
+          </div>
         </div>
 
-        <h3>{{customer.name}}</h3>
+        <div class="card-footer-metrics">
+          <span class="status-tag" [ngClass]="customer.status.toLowerCase()">
+            {{ customer.status }}
+          </span>
+          <span class="purchases-count">{{ customer.purchases }} órdenes</span>
+        </div>
+      </article>
+    </section>
 
-        <p>{{customer.email}}</p>
-
-      </div>
-
-    </div>
-
-    <!-- MODAL -->
-
-    <div
-      class="modal-overlay"
-      *ngIf="selectedCustomer">
-
-      <div class="customer-modal">
-
-        <button
-          class="close-btn"
-          (click)="closeModal()">
-          ✖
+    <div class="modal-backdrop-layer" *ngIf="selectedCustomer" (click)="closeModal()">
+      <div class="detail-sheet-panel" (click)="$event.stopPropagation()">
+        
+        <button class="action-close-trigger" (click)="closeModal()" aria-label="Cerrar modal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
         </button>
 
-        <div class="modal-header">
+        <header class="sheet-hero-header">
+          <div class="sheet-avatar">{{ selectedCustomer.name.charAt(0) }}</div>
+          <div class="sheet-identity">
+            <h2>{{ selectedCustomer.name }}</h2>
+            <span class="status-tag" [ngClass]="selectedCustomer.status.toLowerCase()">{{ selectedCustomer.status }}</span>
+          </div>
+        </header>
 
-          <div class="modal-avatar">
-            👨‍🌾
+        <div class="sheet-data-body">
+          <div class="data-field-group">
+            <span class="field-caption">Identificador</span>
+            <p class="field-value text-highlight">{{ selectedCustomer.id }}</p>
+          </div>
+          
+          <div class="data-field-group">
+            <span class="field-caption">Canal de Contacto</span>
+            <p class="field-value">{{ selectedCustomer.email }}</p>
+            <p class="field-value secondary-sub">{{ selectedCustomer.phone }}</p>
           </div>
 
-          <div>
-            <h2>{{selectedCustomer.name}}</h2>
-            <p>{{selectedCustomer.status}}</p>
+          <div class="data-field-group">
+            <span class="field-caption">Ubicación de Despacho</span>
+            <p class="field-value">{{ selectedCustomer.address }}</p>
           </div>
 
-        </div>
-
-        <div class="detail-grid">
-
-          <div class="detail-card">
-            <label>Correo</label>
-            <p>{{selectedCustomer.email}}</p>
+          <div class="data-field-group">
+            <span class="field-caption">Volumen de Compras</span>
+            <p class="field-value">{{ selectedCustomer.purchases }} operaciones registradas</p>
           </div>
-
-          <div class="detail-card">
-            <label>Teléfono</label>
-            <p>{{selectedCustomer.phone}}</p>
-          </div>
-
-          <div class="detail-card">
-            <label>Dirección</label>
-            <p>{{selectedCustomer.address}}</p>
-          </div>
-
-          <div class="detail-card">
-            <label>Compras</label>
-            <p>{{selectedCustomer.purchases}}</p>
-          </div>
-
         </div>
 
       </div>
-
     </div>
-
   </main>
-
 </div>

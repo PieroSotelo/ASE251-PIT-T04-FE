@@ -1,24 +1,46 @@
-
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
-  standalone:true,
-  imports:[FormsModule],
-  template:`
-  <div style="display:flex;height:100vh">
-    <div style="flex:1;background:url('https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&w=1600') center/cover;color:white;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:bold">
-      Tu nuevo comienzo empieza aquí
-    </div>
-    <div style="flex:1;padding:60px;background:white">
-      <h1>Crear Cuenta</h1>
-      <input placeholder="Nombre Completo">
-      <input placeholder="Gmail">
-      <input placeholder="Contraseña" type="password">
-      <input placeholder="Confirmar Contraseña" type="password">
-      <button>Registrarse</button>
-    </div>
-  </div>
-  `
+  selector: 'app-register',
+  standalone: true,
+  imports: [FormsModule],
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class RegisterComponent{}
+export class RegisterComponent {
+  
+  // Campos del formulario vinculados mediante ngModel
+  fullName = '';
+  email = '';
+  password = '';
+  confirmPassword = '';
+
+  constructor(private router: Router) {}
+
+  // Acción del botón principal "Registrarse"
+  handleRegister() {
+    if (this.fullName && this.email && this.password && this.confirmPassword) {
+      if (this.password !== this.confirmPassword) {
+        alert('Las contraseñas no coinciden. Por favor, verifica.');
+        return;
+      }
+      
+      alert('¡Cuenta creada con éxito! Volviendo al inicio de sesión...');
+      this.goToLogin(); // Ejecuta el salto directo
+    } else {
+      alert('Por favor, completa todos los campos del formulario.');
+    }
+  }
+
+  // Fuerza la navegación nativa de Angular hacia http://localhost:4200/ o /login
+  goToLogin() {
+    this.router.navigate(['/login']).then(navigated => {
+      if (!navigated) {
+        // Opción de respaldo de alta seguridad si el router tuviera micro-retrasos
+        this.router.navigateByUrl('/login');
+      }
+    });
+  }
+}
