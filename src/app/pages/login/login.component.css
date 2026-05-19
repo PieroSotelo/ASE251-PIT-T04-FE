@@ -1,0 +1,105 @@
+.login-container{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=1974') center/cover;
+  position:relative;
+}
+
+.overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.55);
+}
+
+.login-card{
+  width:950px;
+  min-height:600px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(16px);
+  border-radius:30px;
+  overflow:hidden;
+  position:relative;
+  z-index:2;
+}
+
+.login-left{
+  background:linear-gradient(135deg,#22c55e,#14532d);
+  padding:60px;
+  color:white;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.login-left h1{
+  font-size:60px;
+  margin-bottom:20px;
+}
+
+.login-left p{
+  line-height:1.8;
+  margin-bottom:40px;
+}
+
+.login-left img{
+  width:260px;
+}
+
+.login-right{
+  background:#0f172a;
+  padding:60px;
+  color:white;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.login-right h2{
+  font-size:42px;
+  margin-bottom:10px;
+}
+
+.login-right p{
+  color:#94a3b8;
+  margin-bottom:30px;
+}
+
+.form-group{
+  margin-bottom:24px;
+}
+
+.form-group label{
+  display:block;
+  margin-bottom:10px;
+}
+
+.form-group input{
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:16px;
+  background:#1e293b;
+  color:white;
+  outline:none;
+}
+
+button{
+  margin-top:10px;
+  padding:18px;
+  border:none;
+  border-radius:16px;
+  background:linear-gradient(135deg,#22c55e,#15803d);
+  color:white;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:translateY(-4px);
+}

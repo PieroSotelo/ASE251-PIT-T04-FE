@@ -1,0 +1,92 @@
+<div class="layout">
+
+  <app-sidebar></app-sidebar>
+
+  <main class="content">
+
+    <div class="topbar">
+
+      <div>
+        <h1>Clientes</h1>
+        <p>Gestión moderna de clientes</p>
+      </div>
+
+    </div>
+
+    <div class="customers-grid">
+
+      <div
+        class="customer-card"
+        *ngFor="let customer of customers"
+        (click)="openCustomer(customer)">
+
+        <div class="avatar">
+          👤
+        </div>
+
+        <h3>{{customer.name}}</h3>
+
+        <p>{{customer.email}}</p>
+
+      </div>
+
+    </div>
+
+    <!-- MODAL -->
+
+    <div
+      class="modal-overlay"
+      *ngIf="selectedCustomer">
+
+      <div class="customer-modal">
+
+        <button
+          class="close-btn"
+          (click)="closeModal()">
+          ✖
+        </button>
+
+        <div class="modal-header">
+
+          <div class="modal-avatar">
+            👨‍🌾
+          </div>
+
+          <div>
+            <h2>{{selectedCustomer.name}}</h2>
+            <p>{{selectedCustomer.status}}</p>
+          </div>
+
+        </div>
+
+        <div class="detail-grid">
+
+          <div class="detail-card">
+            <label>Correo</label>
+            <p>{{selectedCustomer.email}}</p>
+          </div>
+
+          <div class="detail-card">
+            <label>Teléfono</label>
+            <p>{{selectedCustomer.phone}}</p>
+          </div>
+
+          <div class="detail-card">
+            <label>Dirección</label>
+            <p>{{selectedCustomer.address}}</p>
+          </div>
+
+          <div class="detail-card">
+            <label>Compras</label>
+            <p>{{selectedCustomer.purchases}}</p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
