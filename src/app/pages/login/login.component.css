@@ -10,94 +10,116 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at top right, #16a34a, #090d16 75%);
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)),
+              url('https://images.ecestaticos.com/kZjNrDAZ0f6L5m8p91rS89Twpp0=/0x0:0x0/1200x900/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2Fdc9%2F277%2Fac6%2Fdc9277ac614782dac6b8b32eca7417d0.jpg') center/cover no-repeat;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-
-.login-card {
-  display: flex;
-  width: 850px;
-  height: 520px;
-  background: rgba(15, 23, 42, 0.45); 
-  border-radius: 30px;
-  overflow: hidden;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
-}
-
-.login-left {
-  flex: 1;
-  background: linear-gradient(135deg, rgba(34, 197, 94, 0.8), rgba(21, 128, 61, 0.8));
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.login-content {
   text-align: center;
   color: white;
+  max-width: 500px;
+  width: 90%;
 }
 
-.login-left h1 { font-size: 42px; margin-bottom: 10px; font-weight: 800; }
-.login-left p { font-size: 16px; opacity: 0.9; max-width: 250px; line-height: 1.5; }
-.login-left img { width: 160px; margin-top: 30px; }
+.login-content h1 {
+  font-size: 48px;
+  font-weight: 700;
+  margin: 0 0 15px 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
 
-.login-right {
-  flex: 1.2;
-  padding: 45px;
+.subtitle {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 40px 0;
+  font-weight: 400;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.form-group {
+  margin-bottom: 25px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  color: white;
+  align-items: flex-start;
 }
 
-.login-right h2 { font-size: 32px; margin: 0 0 5px 0; font-weight: 700; }
-.login-right p { color: #94a3b8; margin: 0 0 30px 0; font-size: 14px; }
-
-.form-group { margin-bottom: 20px; display: flex; flex-direction: column; }
-.form-group label { font-size: 13px; color: #cbd5e1; margin-bottom: 8px; font-weight: 600; }
+.form-group label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 10px;
+  font-weight: 600;
+  text-align: left;
+}
 
 .form-group input {
-  padding: 14px 16px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(15, 23, 42, 0.6);
-  color: white;
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
   outline: none;
   font-size: 14px;
   transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .form-group input:focus {
-  border-color: #22c55e;
-  background: rgba(15, 23, 42, 0.8);
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+  transform: scale(1.02);
 }
 
-.login-right button {
+.form-group input::placeholder {
+  color: #999;
+}
+
+.btn-login {
   width: 100%;
-  padding: 15px;
+  padding: 16px;
   border: none;
-  border-radius: 12px;
-  background: #22c55e;
+  border-radius: 8px;
+  background: #4A9EFF;
   color: white;
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 10px;
-  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+  margin-top: 20px;
+  box-shadow: 0 4px 15px rgba(74, 158, 255, 0.4);
 }
 
-.login-right button:hover { background: #16a34a; transform: translateY(-2px); }
+.btn-login:hover {
+  background: #2B7FD4;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(74, 158, 255, 0.5);
+}
 
-.switch-auth { text-align: center; margin-top: 20px; font-size: 14px; color: #94a3b8; }
-.switch-auth a { color: #22c55e; text-decoration: none; font-weight: 700; cursor: pointer; margin-left: 5px; }
-.switch-auth a:hover { text-decoration: underline; }
+.footer-links {
+  margin-top: 30px;
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}
+
+.link-red {
+  color: #FF4444;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.link-red:hover {
+  color: #FF6666;
+  text-decoration: underline;
+}
 
 @media (max-width: 900px) {
   .login-card { width: 90%; height: auto; flex-direction: column; }

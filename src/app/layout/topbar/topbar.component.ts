@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector:'app-topbar',
@@ -6,4 +6,10 @@ import { Component } from '@angular/core';
   templateUrl:'./topbar.component.html',
   styleUrls:['./topbar.component.css']
 })
-export class TopbarComponent{}
+export class TopbarComponent implements OnInit {
+  nombreUsuario: string = '';
+
+  ngOnInit() {
+    this.nombreUsuario = localStorage.getItem('userNombre') || 'Usuario';
+  }
+}

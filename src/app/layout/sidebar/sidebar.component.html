@@ -31,7 +31,8 @@
       (click)="toggleMenu()">
 
       <img
-        src="https://i.pravatar.cc/150?img=12">
+        [src]="'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png?' + Date.now()"
+        alt="Perfil">
 
     </div>
 
@@ -41,8 +42,8 @@
 
       <div class="user-info">
 
-        <h4>Joseph</h4>
-        <p>Administrador</p>
+        <h4>{{ nombreUsuario }}</h4>
+        <p>{{ cargoUsuario }}</p>
 
       </div>
 
@@ -50,7 +51,7 @@
         Ver Cuenta
       </button>
 
-      <button class="logout">
+      <button class="logout" (click)="logout()">
         Cerrar Sesión
       </button>
 
