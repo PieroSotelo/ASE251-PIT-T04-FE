@@ -2,29 +2,29 @@
   <div class="stat-card green">
     <div class="card-icon">🌱</div>
     <h3>Producción Total</h3>
-    <h1>84%</h1>
-    <p>+12% desde el mes pasado</p>
+    <h1>{{ stats.produccionTotalKg | number }} Kg</h1>
+    <p>Rendimiento acumulado en campos</p>
   </div>
 
   <div class="stat-card blue">
     <div class="card-icon">🛒</div>
     <h3>Ventas Totales</h3>
-    <h1>S/ 24,850</h1>
-    <p>+18% desde el mes pasado</p>
+    <h1>{{ stats.ventasTotalesSol | currency:'S/.' }}</h1>
+    <p>Ingresos percibidos facturados</p>
   </div>
 
   <div class="stat-card purple">
     <div class="card-icon">👥</div>
     <h3>Clientes Registrados</h3>
-    <h1>1,245</h1>
-    <p>+8% desde el mes pasado</p>
+    <h1>{{ stats.clientesRegistrados | number }}</h1>
+    <p>Cartera comercial activa</p>
   </div>
 
   <div class="stat-card orange">
     <div class="card-icon">📦</div>
-    <h3>Órdenes Activas</h3>
-    <h1>32</h1>
-    <p>+5% desde el mes pasado</p>
+    <h3>Catálogo de Productos</h3>
+    <h1>{{ stats.productosCatalogo }}</h1>
+    <p>Variedades agrícolas cultivadas</p>
   </div>
 </section>
 
@@ -32,7 +32,7 @@
   <div class="chart-box">
     <div class="chart-header">
       <h2>Producción por Cultivo</h2>
-      <button>Este Mes</button>
+      <button>Este Año</button>
     </div>
     <div class="pie-wrapper">
       <div class="pie-chart"></div>
@@ -41,33 +41,20 @@
         <h1>640 ha</h1>
       </div>
     </div>
+    
     <div class="legend">
-      <div class="legend-item">
-        <div class="dot green-dot"></div>
-        <span>Manzana Gala</span>
-        <strong>40%</strong>
-      </div>
-      <div class="legend-item">
-        <div class="dot blue-dot"></div>
-        <span>Manzana Fuji</span>
-        <strong>25%</strong>
-      </div>
-      <div class="legend-item">
-        <div class="dot yellow-dot"></div>
-        <span>Pera</span>
-        <strong>15%</strong>
-      </div>
-      <div class="legend-item">
-        <div class="dot purple-dot"></div>
-        <span>Durazno</span>
-        <strong>10%</strong>
+      <div class="legend-item" *ngFor="let cultivo of produccionPorCultivo; let i = index">
+        <div class="dot" [ngClass]="{'green-dot': i===0, 'blue-dot': i===1, 'yellow-dot': i===2, 'purple-dot': i===3}"></div>
+        <span>{{ cultivo.nombre }}</span>
+        <span style="color: #94a3b8; font-size: 13px;">{{ cultivo.hectareas }}</span>
+        <strong>{{ cultivo.porcentaje }}</strong>
       </div>
     </div>
   </div>
 
   <div class="chart-box">
     <div class="chart-header">
-      <h2>Producción Mensual</h2>
+      <h2>Rendimiento Mensual (Kg)</h2>
       <button>2026</button>
     </div>
     <div class="line-chart">
@@ -105,39 +92,24 @@
       <div class="upload-icon">☁️</div>
       <div>
         <h3>Arrastra un archivo o haz clic para subir</h3>
-        <p>Formatos: PDF, Excel, CSV</p>
+        <p>Formatos aceptados: PDF, Excel, CSV</p>
       </div>
     </div>
   </div>
 
   <div class="activity-box">
     <div class="box-header">
-      <h2>Actividad Reciente</h2>
+      <h2>Actividad Reciente del Sistema</h2>
       <button>Ver Todo</button>
     </div>
-    <div class="activity-item">
-      <div class="activity-icon green-bg">✔</div>
+    
+    <div class="activity-item" *ngFor="let actividad of actividadesRecientes">
+      <div class="activity-icon" [ngClass]="actividad.claseBg">{{ actividad.icono }}</div>
       <div class="activity-content">
-        <h4>Nueva producción registrada</h4>
-        <p>Manzana Gala - 10 hectáreas</p>
+        <h4>{{ actividad.titulo }}</h4>
+        <p>{{ actividad.descripcion }}</p>
       </div>
-      <span>Hace 2 horas</span>
-    </div>
-    <div class="activity-item">
-      <div class="activity-icon blue-bg">💰</div>
-      <div class="activity-content">
-        <h4>Venta completada</h4>
-        <p>Cliente: Frutas del Sur SAC</p>
-      </div>
-      <span>Hace 5 horas</span>
-    </div>
-    <div class="activity-item">
-      <div class="activity-icon purple-bg">👥</div>
-      <div class="activity-content">
-        <h4>Nuevo cliente registrado</h4>
-        <p>Agroexportaciones Andes</p>
-      </div>
-      <span>Hace 1 día</span>
+      <span>{{ actividad.tiempo }}</span>
     </div>
   </div>
 </section>

@@ -2,11 +2,15 @@
   <app-sidebar></app-sidebar>
 
   <main class="main-content-wrapper">
-    <header class="section-header-panel">
+    
+    <header class="section-header-panel" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
       <div class="header-titles">
         <h1>Clientes</h1>
-        <p>Historial, métricas de consumo y estados de cuenta.</p>
+        <p>Historial, cartera comercial y clasificación del Fundo.</p>
       </div>
+      <button (click)="abrirRegistrar()" style="background-color: var(--accent-green); color: var(--bg-main); border: none; border-radius: 12px; padding: 12px 24px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 15px; transition: opacity 0.2s;">
+        <span style="font-size: 20px;">+</span> Nuevo Cliente
+      </button>
     </header>
 
     <section class="directory-grid-container">
@@ -19,62 +23,125 @@
         
         <div class="card-identity-block">
           <div class="user-avatar-badge">
-            {{ customer.name.charAt(0) }}
+            {{ customer.nombreCliente ? customer.nombreCliente.charAt(0) : 'C' }}
           </div>
           <div class="user-meta-info">
-            <h3>{{ customer.name }}</h3>
-            <span class="user-email-text">{{ customer.email }}</span>
+            <h3>{{ customer.nombreCliente }}</h3>
+            <span class="user-email-text">Tel: {{ customer.telefono }}</span>
           </div>
         </div>
 
         <div class="card-footer-metrics">
-          <span class="status-tag" [ngClass]="customer.status.toLowerCase()">
-            {{ customer.status }}
+          <span class="status-tag activo">
+            {{ customer.tipoCliente }}
           </span>
-          <span class="purchases-count">{{ customer.purchases }} órdenes</span>
+          <span class="purchases-count">ID: #00{{ customer.idCliente }}</span>
         </div>
       </article>
     </section>
 
-    <div class="modal-backdrop-layer" *ngIf="selectedCustomer" (click)="closeModal()">
+    <div class="modal-backdrop-layer" *ngIf="selectedCustomer" (click)="closeModalDetail()">
       <div class="detail-sheet-panel" (click)="$event.stopPropagation()">
         
-        <button class="action-close-trigger" (click)="closeModal()" aria-label="Cerrar modal">
+        <button class="action-close-trigger" (click)="closeModalDetail()" aria-label="Cerrar modal">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
         </button>
 
         <header class="sheet-hero-header">
-          <div class="sheet-avatar">{{ selectedCustomer.name.charAt(0) }}</div>
+          <div class="sheet-avatar">{{ selectedCustomer.nombreCliente ? selectedCustomer.nombreCliente.charAt(0) : 'C' }}</div>
           <div class="sheet-identity">
-            <h2>{{ selectedCustomer.name }}</h2>
-            <span class="status-tag" [ngClass]="selectedCustomer.status.toLowerCase()">{{ selectedCustomer.status }}</span>
+            <h2>{{ selectedCustomer.nombreCliente }}</h2>
+            <span class="status-tag activo">{{ selectedCustomer.tipoCliente }}</span>
           </div>
         </header>
 
         <div class="sheet-data-body">
           <div class="data-field-group">
-            <span class="field-caption">Identificador</span>
-            <p class="field-value text-highlight">{{ selectedCustomer.id }}</p>
+            <span class="field-caption">ID Cliente (Database)</span>
+            <p class="field-value text-highlight">CLI-00{{ selectedCustomer.idCliente }}</p>
           </div>
           
           <div class="data-field-group">
-            <span class="field-caption">Canal de Contacto</span>
-            <p class="field-value">{{ selectedCustomer.email }}</p>
-            <p class="field-value secondary-sub">{{ selectedCustomer.phone }}</p>
+            <span class="field-caption">Teléfono / Contacto</span>
+            <p class="field-value">{{ selectedCustomer.telefono }}</p>
           </div>
 
           <div class="data-field-group">
             <span class="field-caption">Ubicación de Despacho</span>
-            <p class="field-value">{{ selectedCustomer.address }}</p>
+            <p class="field-value">{{ selectedCustomer.direccion }}</p>
           </div>
-
-          <div class="data-field-group">
-            <span class="field-caption">Volumen de Compras</span>
-            <p class="field-value">{{ selectedCustomer.purchases }} operaciones registradas</p>
+          
+          <div style="display: flex; gap: 12px; margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 24px;">
+            <button (click)="iniciarEdicion(selectedCustomer)" style="flex: 1; background: var(--bg-surface-elevated); border: 1px solid var(--border-color); color: var(--text-primary); padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600;">
+              ✏ Editar Datos
+            </button>
+            <button (click)="eliminarCliente(selectedCustomer.idCliente)" style="background: #ef4444; border: none; color: white; padding: 12px 20px; border-radius: 10px; cursor: pointer; font-weight: 600;">
+              🗑 Eliminar
+            </button>
           </div>
         </div>
 
       </div>
     </div>
+
+    <div class="modal-backdrop-layer" *ngIf="showModalForm" (click)="cerrarModalForm()">
+      <div class="detail-sheet-panel" (click)="$event.stopPropagation()">
+        
+        <button class="action-close-trigger" (click)="cerrarModalForm()" aria-label="Cerrar formulario">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+
+        <header class="sheet-hero-header">
+          <div class="sheet-avatar" style="background: var(--accent-green-alpha); color: var(--accent-green);">💼</div>
+          <div class="sheet-identity">
+            <h2>{{ isEditMode ? 'Modificar Cliente' : 'Registrar Nuevo Cliente' }}</h2>
+            <p style="color: var(--text-muted); margin: 0; font-size: 13px;">Mapeado con el Backend corporativo</p>
+          </div>
+        </header>
+
+        <div class="sheet-data-body">
+          
+          <div class="data-field-group">
+            <span class="field-caption">Nombre Completo / Razón Social *</span>
+            <input type="text" [(ngModel)]="nuevoCliente.nombreCliente" name="nombreCliente" placeholder="Ej. Agroexportaciones del Norte S.A." 
+              style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); color: var(--text-primary); padding: 12px; border-radius: 10px; font-size: 14px; width: 100%; box-sizing: border-box; margin-top: 6px; outline: none;">
+          </div>
+
+          <div class="data-field-group">
+            <span class="field-caption">Teléfono de Contacto *</span>
+            <input type="text" [(ngModel)]="nuevoCliente.telefono" name="telefono" placeholder="Ej. 999888777" 
+              style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); color: var(--text-primary); padding: 12px; border-radius: 10px; font-size: 14px; width: 100%; box-sizing: border-box; margin-top: 6px; outline: none;">
+          </div>
+
+          <div class="data-field-group">
+            <span class="field-caption">Dirección Fiscal / Despacho *</span>
+            <input type="text" [(ngModel)]="nuevoCliente.direccion" name="direccion" placeholder="Ej. Panamericana Sur Km 41, Ica" 
+              style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); color: var(--text-primary); padding: 12px; border-radius: 10px; font-size: 14px; width: 100%; box-sizing: border-box; margin-top: 6px; outline: none;">
+          </div>
+
+          <div class="data-field-group">
+            <span class="field-caption">Tipo de Distribución</span>
+            <select [(ngModel)]="nuevoCliente.tipoCliente" name="tipoCliente" 
+              style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); color: var(--text-primary); padding: 12px; border-radius: 10px; font-size: 14px; width: 100%; box-sizing: border-box; margin-top: 6px; outline: none; appearance: none; -webkit-appearance: none;">
+              <option value="Mayorista">Mayorista</option>
+              <option value="Exportador">Exportador</option>
+              <option value="Minorista">Minorista</option>
+            </select>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 20px;">
+            <button (click)="cerrarModalForm()" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); padding: 12px 20px; border-radius: 10px; cursor: pointer; font-weight: 600;">
+              Cancelar
+            </button>
+            <button (click)="guardarCliente()" style="background: var(--accent-green); color: var(--bg-main); border: none; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-weight: 700;">
+              {{ isEditMode ? 'Actualizar Registro' : 'Confirmar Guardado' }}
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
   </main>
 </div>

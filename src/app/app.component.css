@@ -1,4 +1,4 @@
-/* Contenedor raíz: Fondo oscuro total sin fisuras */
+
 .dashboard-layout {
   display: flex;
   min-height: 100vh;
@@ -10,13 +10,13 @@
   box-sizing: border-box;
 }
 
-/* El contenido ahora se expande correctamente ocupando todo el ancho restante */
+
 .dashboard-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 30px 40px; /* Más espacio a los lados */
-  margin-left: 100px; /* Ajuste preciso para alinearse con el sidebar de la izquierda */
+  padding: 30px 40px; 
+  margin-left: 100px; 
   box-sizing: border-box;
   overflow-x: hidden;
   background-color: #020617;
@@ -36,7 +36,7 @@
   background-color: #020617;
 }
 
-/* Responsivo optimizado */
+
 @media (max-width: 900px) {
   .dashboard-content {
     margin-left: 70px;

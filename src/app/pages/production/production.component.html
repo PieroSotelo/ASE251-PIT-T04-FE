@@ -1,336 +1,110 @@
-<div class="layout">
+<div class="content">
+  
+  <section class="hero-banner">
+    <div class="hero-text">
+      <h1>Gestión de Producción</h1>
+      <p>Controla los lotes agrícolas, el rendimiento de las cosechas y las actividades de campo del Fundo.</p>
+    </div>
+    <button class="btn-primary" (click)="abrirFormulario()">+ Registrar Producción</button>
+  </section>
 
-  <app-sidebar></app-sidebar>
+  <div class="production-grid">
+    
+    <div class="card">
+      <div class="card-header">
+        <h2>Condiciones del Fundo en Tiempo Real</h2>
+      </div>
+      <div class="weather-widgets">
+        <div class="weather-box">
+          <span style="color: #94a3b8; font-size: 13px;">Temperatura</span>
+          <h3 style="margin: 8px 0 0 0; font-size: 24px; color: #eab308;">24°C</h3>
+        </div>
+        <div class="weather-box">
+          <span style="color: #94a3b8; font-size: 13px;">Humedad Suelo</span>
+          <h3 style="margin: 8px 0 0 0; font-size: 24px; color: #3b82f6;">65%</h3>
+        </div>
+        <div class="weather-box">
+          <span style="color: #94a3b8; font-size: 13px;">Prob. Lluvia</span>
+          <h3 style="margin: 8px 0 0 0; font-size: 24px; color: #cbd5e1;">10%</h3>
+        </div>
+      </div>
+    </div>
 
-  <main class="content">
+    <div class="card">
+      <div class="card-header">
+        <h2>Actividad Reciente</h2>
+      </div>
+      <div class="activity-item">
+        <div class="activity-icon green-bg">✔</div>
+        <div>
+          <h4 style="margin: 0; font-size: 14px;">Campo Norte Actualizado</h4>
+          <p style="margin: 2px 0 0 0; font-size: 12px; color: #94a3b8;">Producción registrada</p>
+        </div>
+      </div>
+    </div>
 
-    <!-- HERO -->
+  </div>
 
-    <div class="hero-banner">
+  <div class="table-card">
+    <div class="card-header">
+      <h2>Historial de Cosechas / Rendimiento</h2>
+    </div>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>ID Cosecha</th>
+          <th>Producto</th>
+          <th>Lote / Sector</th>
+          <th>Fecha Cosecha</th>
+          <th>Cantidad (Kg)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of cosechas">
+          <td>#00{{ c.idCosecha }}</td>
+          <td style="font-weight: 600; color: #22c55e;">{{ c.producto.nombreProducto }}</td>
+          <td>{{ c.lote }}</td>
+          <td>{{ c.fechaCosecha | date:'dd/MM/yyyy' }}</td>
+          <td>{{ c.cantidad | number }} kg</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-      <div>
-
-        <h1>Gestión de Producción</h1>
-
-        <p>
-          Monitoreo inteligente de cultivos y rendimiento agrícola.
-        </p>
-
+  <div class="modal-overlay" *ngIf="showForm">
+    <div class="modal-card">
+      <h3>Registrar Producción (Cosecha)</h3>
+      
+      <div class="form-group">
+        <label>Producto Cosechado</label>
+        <select [(ngModel)]="nuevaCosecha.producto.idProducto">
+          <option [ngValue]="null" disabled selected>-- Seleccione el producto --</option>
+          <option *ngFor="let p of listaProductos" [value]="p.idProducto">{{ p.nombreProducto }}</option>
+        </select>
       </div>
 
-      <div class="hero-icon">
-        🌾
+      <div class="form-group">
+        <label>Lote / Sector del Fundo</label>
+        <input type="text" placeholder="Ej. Lote Norte, Sector 4" [(ngModel)]="nuevaCosecha.lote">
+      </div>
+
+      <div class="form-group">
+        <label>Fecha de Recolección</label>
+        <input type="date" [(ngModel)]="nuevaCosecha.fechaCosecha">
+      </div>
+
+      <div class="form-group">
+        <label>Cantidad Cosechada (Kilogramos)</label>
+        <input type="number" placeholder="Ej. 5000" [(ngModel)]="nuevaCosecha.cantidad">
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-secondary" (click)="cerrarFormulario()">Cancelar</button>
+        <button class="btn-primary" (click)="guardarCosecha()">Guardar Registro</button>
       </div>
 
     </div>
-
-    <!-- STATS -->
-
-    <div class="stats-grid">
-
-      <div class="stat-card green">
-
-        <h3>Producción Total</h3>
-
-        <h1>84%</h1>
-
-        <p>Rendimiento general</p>
-
-      </div>
-
-      <div class="stat-card blue">
-
-        <h3>Campos Activos</h3>
-
-        <h1>12</h1>
-
-        <p>Campos monitoreados</p>
-
-      </div>
-
-      <div class="stat-card orange">
-
-        <h3>Hectáreas</h3>
-
-        <h1>640</h1>
-
-        <p>Total sembrado</p>
-
-      </div>
-
-      <div class="stat-card purple">
-
-        <h3>Producción Mensual</h3>
-
-        <h1>+18%</h1>
-
-        <p>Crecimiento mensual</p>
-
-      </div>
-
-    </div>
-
-    <!-- CONTENT -->
-
-    <div class="content-grid">
-
-      <!-- LEFT -->
-
-      <div class="production-card">
-
-        <div class="card-header">
-
-          <h2>Campos de Producción</h2>
-
-          <button>
-            Ver Todo
-          </button>
-
-        </div>
-
-        <!-- ITEM -->
-
-        <div class="production-item">
-
-          <div class="item-top">
-
-            <div>
-
-              <h3>Manzana Gala</h3>
-
-              <p>Campo Norte - 10 hectáreas</p>
-
-            </div>
-
-            <span class="status success">
-              Excelente
-            </span>
-
-          </div>
-
-          <div class="progress">
-
-            <span style="width:88%"></span>
-
-          </div>
-
-        </div>
-
-        <!-- ITEM -->
-
-        <div class="production-item">
-
-          <div class="item-top">
-
-            <div>
-
-              <h3>Manzana Fuji</h3>
-
-              <p>Campo Sur - 5 hectáreas</p>
-
-            </div>
-
-            <span class="status warning">
-              Medio
-            </span>
-
-          </div>
-
-          <div class="progress">
-
-            <span style="width:65%"></span>
-
-          </div>
-
-        </div>
-
-        <!-- ITEM -->
-
-        <div class="production-item">
-
-          <div class="item-top">
-
-            <div>
-
-              <h3>Pera Golden</h3>
-
-              <p>Campo Este - 8 hectáreas</p>
-
-            </div>
-
-            <span class="status success">
-              Excelente
-            </span>
-
-          </div>
-
-          <div class="progress">
-
-            <span style="width:92%"></span>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- RIGHT -->
-
-      <div class="chart-card">
-
-        <div class="card-header">
-
-          <h2>Rendimiento</h2>
-
-          <button>
-            Este Mes
-          </button>
-
-        </div>
-
-        <div class="circle-chart">
-
-          <div class="circle-center">
-
-            82%
-
-          </div>
-
-        </div>
-
-        <div class="chart-info">
-
-          <div>
-
-            <span class="dot green-dot"></span>
-
-            Producción Alta
-
-          </div>
-
-          <strong>82%</strong>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- BOTTOM -->
-
-    <div class="bottom-grid">
-
-      <!-- WEATHER -->
-
-      <div class="weather-card">
-
-        <div class="weather-top">
-
-          <div>
-
-            <h2>Clima Actual</h2>
-
-            <p>Lima, Perú</p>
-
-          </div>
-
-          <div class="weather-icon">
-            ☀️
-          </div>
-
-        </div>
-
-        <div class="temperature">
-          28°C
-        </div>
-
-        <div class="weather-details">
-
-          <div>
-            <span>Humedad</span>
-            <h3>64%</h3>
-          </div>
-
-          <div>
-            <span>Viento</span>
-            <h3>12 km/h</h3>
-          </div>
-
-          <div>
-            <span>Lluvia</span>
-            <h3>10%</h3>
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- ACTIVITY -->
-
-      <div class="activity-card">
-
-        <div class="card-header">
-
-          <h2>Actividad Reciente</h2>
-
-          <button>
-            Ver Todo
-          </button>
-
-        </div>
-
-        <div class="activity-item">
-
-          <div class="activity-icon green-bg">
-            ✔
-          </div>
-
-          <div>
-
-            <h4>Campo Norte actualizado</h4>
-
-            <p>Producción aumentó 12%</p>
-
-          </div>
-
-        </div>
-
-        <div class="activity-item">
-
-          <div class="activity-icon blue-bg">
-            🌧
-          </div>
-
-          <div>
-
-            <h4>Riego programado</h4>
-
-            <p>Campo Sur - 5:00 PM</p>
-
-          </div>
-
-        </div>
-
-        <div class="activity-item">
-
-          <div class="activity-icon purple-bg">
-            🚜
-          </div>
-
-          <div>
-
-            <h4>Mantenimiento realizado</h4>
-
-            <p>Tractor principal</p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </main>
+  </div>
 
 </div>

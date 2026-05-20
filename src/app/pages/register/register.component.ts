@@ -1,46 +1,64 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { AuthService, Usuario } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  
-  // Campos del formulario vinculados mediante ngModel
-  fullName = '';
-  email = '';
+  firstName = '';
+  lastName = '';
+  username = '';
+  phone = '';
+  role: 'Administrador' | 'Encargado' | 'Trabajador' = 'Trabajador';
   password = '';
   confirmPassword = '';
 
-  constructor(private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
-  // Acción del botón principal "Registrarse"
   handleRegister() {
-    if (this.fullName && this.email && this.password && this.confirmPassword) {
+  
+    if (this.firstName && this.lastName && this.username && this.phone && this.password && this.confirmPassword) {
+      
       if (this.password !== this.confirmPassword) {
         alert('Las contraseñas no coinciden. Por favor, verifica.');
         return;
       }
       
-      alert('¡Cuenta creada con éxito! Volviendo al inicio de sesión...');
-      this.goToLogin(); // Ejecuta el salto directo
+    
+      const nuevoUsuario: Usuario = {
+        nombre: this.firstName,
+        apellido: this.lastName,
+        telefono: this.phone,
+        cargo: this.role,
+        usuario: this.username,
+        contrasena: this.password
+      };
+
+     
+      this.authService.register(nuevoUsuario).subscribe({
+        next: (response) => {
+          alert(`¡Cuenta creada con éxito para ${response.nombre} ${response.apellido}! Redirigiendo...`);
+          this.goToLogin();
+        },
+        error: (err) => {
+          console.error(err);
+          alert('Error al registrar: El nombre de usuario ya está en uso en el Fundo.');
+        }
+      });
+
     } else {
       alert('Por favor, completa todos los campos del formulario.');
     }
   }
 
-  // Fuerza la navegación nativa de Angular hacia http://localhost:4200/ o /login
   goToLogin() {
-    this.router.navigate(['/login']).then(navigated => {
-      if (!navigated) {
-        // Opción de respaldo de alta seguridad si el router tuviera micro-retrasos
-        this.router.navigateByUrl('/login');
-      }
-    });
+    this.router.navigate(['/login']);
   }
 }

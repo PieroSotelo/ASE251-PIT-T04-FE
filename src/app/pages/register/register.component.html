@@ -7,26 +7,49 @@
 
     <div class="register-right">
       <h2>Crear Cuenta</h2>
-      <p>Completa tus datos para registrarte en el sistema</p>
+      <p>Completa tus datos para registrarte en el sistema del Fundo</p>
 
-      <div class="form-group">
-        <label>Nombre Completo</label>
-        <input type="text" placeholder="Ej. Juan Pérez" [(ngModel)]="fullName">
-      </div>
+      <div class="form-grid">
+        
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" placeholder="Ej. Juan" [(ngModel)]="firstName">
+        </div>
 
-      <div class="form-group">
-        <label>Gmail</label>
-        <input type="email" placeholder="correo@gmail.com" [(ngModel)]="email">
-      </div>
+        <div class="form-group">
+          <label>Apellido</label>
+          <input type="text" placeholder="Ej. Pérez" [(ngModel)]="lastName">
+        </div>
 
-      <div class="form-group">
-        <label>Contraseña</label>
-        <input type="password" placeholder="********" [(ngModel)]="password">
-      </div>
+        <div class="form-group">
+          <label>Nombre de Usuario</label>
+          <input type="text" placeholder="Ej. jperez12" [(ngModel)]="username">
+        </div>
 
-      <div class="form-group">
-        <label>Confirmar Contraseña</label>
-        <input type="password" placeholder="********" [(ngModel)]="confirmPassword">
+        <div class="form-group">
+          <label>Teléfono Celular</label>
+          <input type="text" placeholder="Ej. 987654321" [(ngModel)]="phone">
+        </div>
+
+        <div class="form-group">
+          <label>Cargo Organizacional</label>
+          <select [(ngModel)]="role">
+            <option value="Trabajador">Trabajador de Campo</option>
+            <option value="Encargado">Encargado de Fundo</option>
+            <option value="Administrador">Administrador</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Contraseña</label>
+          <input type="password" placeholder="********" [(ngModel)]="password">
+        </div>
+
+        <div class="form-group" style="grid-column: span 2;">
+          <label>Confirmar Contraseña</label>
+          <input type="password" placeholder="********" [(ngModel)]="confirmPassword">
+        </div>
+
       </div>
 
       <button (click)="handleRegister()">Registrarse</button>

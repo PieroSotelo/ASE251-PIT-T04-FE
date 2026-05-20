@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router'; 
-import { SidebarComponent } from './layout/sidebar.component';
-import { TopbarComponent } from './layout/topbar.component';
+import { SidebarComponent } from './layout/sidebar/sidebar.component';
+import { TopbarComponent } from './layout/topbar/topbar.component';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs/operators';
 
@@ -19,10 +19,7 @@ export class AppComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    // Sincroniza la ruta actual inmediatamente al cargar la app
     this.currentUrl = this.router.url;
-
-    // Escucha de forma reactiva cada vez que cambias de página con total precisión
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
