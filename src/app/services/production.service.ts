@@ -5,18 +5,14 @@ import { Observable } from 'rxjs';
 export interface Producto {
   idProducto: number;
   nombreProducto: string;
-  variedad?: string;
 }
 
 export interface Cosecha {
-  idCosecha: number | null;
-  producto: {
-    idProducto: number | null;
-    nombreProducto?: string;
-  };
+  idCosecha?: number;
+  producto: { idProducto: number | null; nombreProducto?: string };
+  cantidadCosechada: number;
   fechaCosecha: string;
-  cantidadKg: number;
-  costoPorKg: number; 
+  observaciones?: string;
 }
 
 @Injectable({
@@ -36,8 +32,12 @@ export class ProductionService {
     return this.http.get<Producto[]>(this.urlProductos);
   }
 
-  createCosecha(cosecha: any): Observable<Cosecha> {
+  createCosecha(cosecha: Cosecha): Observable<Cosecha> {
     return this.http.post<Cosecha>(this.urlCosechas, cosecha);
+  }
+
+  updateCosecha(id: number, cosecha: Cosecha): Observable<Cosecha> {
+    return this.http.put<Cosecha>(`${this.urlCosechas}/${id}`, cosecha);
   }
 
   deleteCosecha(id: number): Observable<void> {

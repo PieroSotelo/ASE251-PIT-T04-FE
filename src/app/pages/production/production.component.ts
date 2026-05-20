@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ProductionService, Cosecha, Producto } from '../../services/production.service';
 
 @Component({
   selector: 'app-production',
@@ -9,68 +10,114 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './production.component.html',
   styleUrls: ['./production.component.css']
 })
-export class ProductionComponent {
+export class ProductionComponent implements OnInit {
   
   showForm = false;
+  isEditMode = false; 
+  cosechas: Cosecha[] = [];
+  listaProductos: Producto[] = [];
 
-  
-  listaProductos = [
-    { idProducto: 1, nombreProducto: 'Palta Hass' },
-    { idProducto: 2, nombreProducto: 'Uva Red Globe' },
-    { idProducto: 3, nombreProducto: 'Arándano Biloxi' },
-    { idProducto: 4, nombreProducto: 'Manzana Gala' }
-  ];
-
-  
-  nuevaCosecha = {
-    producto: {
-      idProducto: null
-    },
+  nuevaCosecha: Cosecha = {
+    idCosecha: undefined,
+    producto: { idProducto: null },
     fechaCosecha: '',
-    cantidad: null,
-    lote: ''
+    cantidadCosechada: 0,
+    observaciones: ''
   };
 
+  constructor(private productionService: ProductionService) {}
 
-  cosechas = [
-    { idCosecha: 1, producto: { nombreProducto: 'Manzana Gala' }, fechaCosecha: '2026-05-19', cantidad: 12500, lote: 'Lote Norte' },
-    { idCosecha: 2, producto: { nombreProducto: 'Palta Hass' }, fechaCosecha: '2026-05-15', cantidad: 8400, lote: 'Lote Este' }
-  ];
+  ngOnInit(): void {
+    this.cargarDatos();
+  }
+
+  cargarDatos(): void {
+    this.productionService.getCosechas().subscribe({
+      next: (data) => this.cosechas = data,
+      error: (err) => console.error('Error al recuperar cosechas:', err)
+    });
+
+    this.productionService.getProductos().subscribe({
+      next: (data) => this.listaProductos = data,
+      error: (err) => console.error('Error al recuperar productos:', err)
+    });
+  }
 
   abrirFormulario() {
+    this.isEditMode = false;
+    this.nuevaCosecha = { idCosecha: undefined, producto: { idProducto: null }, fechaCosecha: '', cantidadCosechada: 0, observaciones: '' };
+    this.showForm = true;
+  }
+
+  iniciarEdicion(cosecha: Cosecha) {
+    this.isEditMode = true;
+    this.nuevaCosecha = {
+      idCosecha: cosecha.idCosecha,
+      producto: { idProducto: cosecha.producto.idProducto },
+      fechaCosecha: cosecha.fechaCosecha,
+      cantidadCosechada: cosecha.cantidadCosechada,
+      observaciones: cosecha.observaciones
+    };
     this.showForm = true;
   }
 
   cerrarFormulario() {
     this.showForm = false;
-    this.nuevaCosecha = {
-      producto: { idProducto: null },
-      fechaCosecha: '',
-      cantidad: null,
-      lote: ''
-    };
+    this.isEditMode = false;
   }
 
- 
   guardarCosecha() {
-    if (!this.nuevaCosecha.producto.idProducto || !this.nuevaCosecha.fechaCosecha || !this.nuevaCosecha.cantidad || !this.nuevaCosecha.lote) {
-      alert('Por favor, completa todos los campos del formulario de producción.');
+    if (!this.nuevaCosecha.producto.idProducto || !this.nuevaCosecha.fechaCosecha || !this.nuevaCosecha.cantidadCosechada) {
+      alert('Por favor, completa todos los campos requeridos.');
       return;
     }
 
-  
-    const prodSeleccionado = this.listaProductos.find(p => p.idProducto === Number(this.nuevaCosecha.producto.idProducto));
-
-    const cosechaGuardada = {
-      idCosecha: this.cosechas.length + 1,
-      producto: { nombreProducto: prodSeleccionado ? prodSeleccionado.nombreProducto : 'Producto' },
+    const payload: Cosecha = {
+      idCosecha: this.nuevaCosecha.idCosecha,
+      producto: { idProducto: Number(this.nuevaCosecha.producto.idProducto) },
       fechaCosecha: this.nuevaCosecha.fechaCosecha,
-      cantidad: Number(this.nuevaCosecha.cantidad),
-      lote: this.nuevaCosecha.lote
+      cantidadCosechada: Number(this.nuevaCosecha.cantidadCosechada),
+      observaciones: this.nuevaCosecha.observaciones
     };
 
-    this.cosechas.unshift(cosechaGuardada);
-    alert('¡Producción/Cosecha registrada con éxito! Payload listo para Backend.');
-    this.cerrarFormulario();
+    if (this.isEditMode && payload.idCosecha) {
+      this.productionService.updateCosecha(payload.idCosecha, payload).subscribe({
+        next: () => {
+          alert('¡Registro de cosecha actualizado correctamente!');
+          this.cerrarFormulario();
+          this.cargarDatos();
+        },
+        error: (err) => {
+          console.error(err);
+          alert('Error al intentar actualizar la cosecha.');
+        }
+      });
+    } else {
+      this.productionService.createCosecha(payload).subscribe({
+        next: () => {
+          alert('¡Lote de producción guardado correctamente!');
+          this.cerrarFormulario();
+          this.cargarDatos();
+        },
+        error: (err) => {
+          console.error(err);
+          alert('Error de persistencia en el servidor.');
+        }
+      });
+    }
+  }
+
+  eliminarCosecha(idCosecha: number | undefined) {
+    if (!idCosecha) return;
+
+    if (confirm('¿Deseas eliminar este registro de cosecha del historial del Fundo?')) {
+      this.productionService.deleteCosecha(idCosecha).subscribe({
+        next: () => {
+          alert('Registro eliminado correctamente.');
+          this.cargarDatos();
+        },
+        error: (err) => console.error(err)
+      });
+    }
   }
 }

@@ -9,7 +9,6 @@
   </section>
 
   <div class="production-grid">
-    
     <div class="card">
       <div class="card-header">
         <h2>Condiciones del Fundo en Tiempo Real</h2>
@@ -37,12 +36,11 @@
       <div class="activity-item">
         <div class="activity-icon green-bg">✔</div>
         <div>
-          <h4 style="margin: 0; font-size: 14px;">Campo Norte Actualizado</h4>
-          <p style="margin: 2px 0 0 0; font-size: 12px; color: #94a3b8;">Producción registrada</p>
+          <h4 style="margin: 0; font-size: 14px;">Cosechas Sincronizadas</h4>
+          <p style="margin: 2px 0 0 0; font-size: 12px; color: #94a3b8;">Conexión directa a Spring Boot establecida.</p>
         </div>
       </div>
     </div>
-
   </div>
 
   <div class="table-card">
@@ -55,18 +53,34 @@
         <tr>
           <th>ID Cosecha</th>
           <th>Producto</th>
-          <th>Lote / Sector</th>
+          <th>Observaciones / Sector</th>
           <th>Fecha Cosecha</th>
-          <th>Cantidad (Kg)</th>
+          <th>Cantidad</th>
+          <th style="text-align: center;">Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let c of cosechas">
-          <td>#00{{ c.idCosecha }}</td>
-          <td style="font-weight: 600; color: #22c55e;">{{ c.producto.nombreProducto }}</td>
-          <td>{{ c.lote }}</td>
+          <td><span style="font-family: monospace; color: #3b82f6;">#CS-00{{ c.idCosecha }}</span></td>
+          <td style="font-weight: 600; color: #22c55e;">{{ c.producto?.nombreProducto || 'Desconocido' }}</td>
+          <td>{{ c.observaciones || 'Sin anotaciones' }}</td>
           <td>{{ c.fechaCosecha | date:'dd/MM/yyyy' }}</td>
-          <td>{{ c.cantidad | number }} kg</td>
+          <td style="font-weight: 700;">{{ c.cantidadCosechada | number }} kg</td>
+          <td>
+            <div style="display: flex; gap: 8px; justify-content: center;">
+              <button (click)="iniciarEdicion(c)" style="background: #334155; color: #60a5fa; border: 1px solid rgba(255,255,255,0.05); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600;">
+                ✏️ Editar
+              </button>
+              <button (click)="eliminarCosecha(c.idCosecha)" style="background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600;">
+                🗑️ Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="cosechas.length === 0">
+          <td colspan="6" style="text-align: center; color: #64748b; padding: 24px;">
+            No hay registros de cosechas guardadas en SQL Server actualmente.
+          </td>
         </tr>
       </tbody>
     </table>
@@ -74,36 +88,39 @@
 
   <div class="modal-overlay" *ngIf="showForm">
     <div class="modal-card">
-      <h3>Registrar Producción (Cosecha)</h3>
+      <h3>{{ isEditMode ? 'Modificar Registro de Cosecha' : 'Registrar Producción (Cosecha)' }}</h3>
       
       <div class="form-group">
-        <label>Producto Cosechado</label>
+        <label>Producto Cosechado *</label>
         <select [(ngModel)]="nuevaCosecha.producto.idProducto">
           <option [ngValue]="null" disabled selected>-- Seleccione el producto --</option>
-          <option *ngFor="let p of listaProductos" [value]="p.idProducto">{{ p.nombreProducto }}</option>
+          <option *ngFor="let p of listaProductos" [value]="p.idProducto">
+            {{ p.nombreProducto }}
+          </option>
         </select>
       </div>
 
       <div class="form-group">
-        <label>Lote / Sector del Fundo</label>
-        <input type="text" placeholder="Ej. Lote Norte, Sector 4" [(ngModel)]="nuevaCosecha.lote">
+        <label>Observaciones / Sector del Fundo</label>
+        <input type="text" placeholder="Ej. Lote Norte, Sector 4" [(ngModel)]="nuevaCosecha.observaciones">
       </div>
 
       <div class="form-group">
-        <label>Fecha de Recolección</label>
+        <label>Fecha de Recolección *</label>
         <input type="date" [(ngModel)]="nuevaCosecha.fechaCosecha">
       </div>
 
       <div class="form-group">
-        <label>Cantidad Cosechada (Kilogramos)</label>
-        <input type="number" placeholder="Ej. 5000" [(ngModel)]="nuevaCosecha.cantidad">
+        <label>Cantidad Cosechada (Kilogramos) *</label>
+        <input type="number" placeholder="Ej. 5000" [(ngModel)]="nuevaCosecha.cantidadCosechada">
       </div>
 
       <div class="modal-actions">
         <button class="btn-secondary" (click)="cerrarFormulario()">Cancelar</button>
-        <button class="btn-primary" (click)="guardarCosecha()">Guardar Registro</button>
+        <button class="btn-primary" (click)="guardarCosecha()">
+          {{ isEditMode ? 'Actualizar Cosecha' : 'Guardar Registro' }}
+        </button>
       </div>
-
     </div>
   </div>
 
